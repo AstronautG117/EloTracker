@@ -33,30 +33,5 @@ namespace EloTracker.Utilities
             List<T> things = (List<T>)formatter.Deserialize(inFile);
             return things;
         }
-
-        public static void SaveXML(IEnumerable<T> things, string filePath)
-        {
-            string directoryName = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(directoryName))
-            {
-                Directory.CreateDirectory(directoryName);
-            }
-            FileStream outFile = File.Create(filePath);
-            XmlSerializer formatter = new XmlSerializer(typeof(List<T>));
-            formatter.Serialize(outFile, things);
-        }
-
-        public static List<T> LoadXML(string filePath)
-        {
-            List<T> things = new List<T>();
-            XmlSerializer formatter = new XmlSerializer(typeof(List<T>));
-            FileStream inFile = new FileStream(filePath, FileMode.Open);
-            byte[] buffer = new byte[inFile.Length];
-            inFile.Read(buffer, 0, (int)inFile.Length);
-            MemoryStream stream = new MemoryStream(buffer);
-            return (List<T>)formatter.Deserialize(stream);
-        }
-
-
     }
 }

@@ -25,6 +25,9 @@ namespace EloTracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private const string PLAYERS_FILE_NAME = "players.elo";
+        private const string GAMES_FILE_NAME = "games.elo";
+
         private PenaltySettings settings;
 
         public History History { get; }
@@ -72,13 +75,15 @@ namespace EloTracker.ViewModel
 
         private void saveExecute()
         {
-            string playerSaveFile = Path.Combine(dataDir, "players.elo");
+            string playerSaveFile = Path.Combine(dataDir, PLAYERS_FILE_NAME);
             List<PlayerSerializer> pSerials = PlayerSerializer.SerializeList(Players);
             Serializer<PlayerSerializer>.Save(pSerials, playerSaveFile);
 
-            string gameSaveFile = Path.Combine(dataDir, "games.elo");
+            string gameSaveFile = Path.Combine(dataDir, GAMES_FILE_NAME);
             List<GameSerializer> gSerials = GameSerializer.SerializeList(History.GameHistory);
             Serializer<GameSerializer>.Save(gSerials, gameSaveFile);
+
+            backup();
         }
         private void loadExecute()
         {
@@ -107,12 +112,32 @@ namespace EloTracker.ViewModel
             _players.Sort(Player.compareScores);
         }
 
+        private void backup()
+        {
+            string backupDirectory = Path.Combine(dataDir, "Backups\\");
+            if (!Directory.Exists(backupDirectory))
+            {
+                Directory.CreateDirectory(backupDirectory);
+            }
+            string thisBackup = Path.Combine(backupDirectory, string.Format("{0}\\", DateTime.Now.ToLongDateString()));
+            if (!Directory.Exists(thisBackup))
+            {
+                Directory.CreateDirectory(thisBackup);
+            }
+            string playersFilePath = Path.Combine(dataDir, PLAYERS_FILE_NAME);
+            string playersBackupPath = Path.Combine(thisBackup, PLAYERS_FILE_NAME);
+            File.Copy(playersFilePath, playersBackupPath, true);
+            string gamesFilePath = Path.Combine(dataDir, GAMES_FILE_NAME);
+            string gamesBackupPath = Path.Combine(thisBackup, GAMES_FILE_NAME);
+            File.Copy(gamesFilePath, gamesBackupPath, true);
+        }
+
         private static string dataDir
         {
             get
             {
                 string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string dir = Path.Combine(appData, "ELO/");
+                string dir = Path.Combine(appData, "ELO\\");
                 return dir;
             }
         }
