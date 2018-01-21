@@ -32,22 +32,22 @@ namespace EloTracker.Models
             History playerHistory = history.filter(player);
             playerHistory.SortByDate();
 
-            int i = 1, gamesPlayed = 0;
-            Player opponent = history.GameHistory[0].GetOtherPlayer(player);
+            int i = 0, gamesPlayed = 0;
+            Player opponent = game.GetOtherPlayer(player);
             foreach (Game g in history.GameHistory)
             {
-                if (i > GAMES_TO_CHECK)
+                if (i >= GAMES_TO_CHECK)
                 {
                     break;
                 }
-                else if (i > 0)
+                else if (g != game)
                 {
                     if (opponent == g.GetOtherPlayer(player))
                     {
                         gamesPlayed++;
                     }
+                    i++;
                 }
-                i++;
             }
 
             PlayerWinState state = 0;
@@ -73,18 +73,22 @@ namespace EloTracker.Models
                 if (state == PlayerWinState.Win)
                 {
                     message = string.Format(
-                        "{0} has had winning points multiplied by {1} for playing too many games too recently" +
-                        " with the same player.",
+                        "{0} has had winning points multiplied by {1} for playing {2} out of the last 3 " +
+                        "games with {3}.",
                         player.Name,
-                        penalty);
+                        penalty,
+                        gamesPlayed,
+                        opponent.Name);
                 }
                 else if (state == PlayerWinState.Loss)
                 {
                     message = string.Format(
-                        "{0} has had losing points multiplied by {1} for playing too many games too recently" +
-                        " with the same player.",
+                        "{0} has had losing points multiplied by {1} for playing {2} out of the last 3 " +
+                        "games with {3}.",
                         player.Name,
-                        penalty);
+                        penalty,
+                        gamesPlayed,
+                        opponent.Name);
                 }
 
                 MessageBox.Show(message, "Penalty Applied", MessageBoxButton.OK, MessageBoxImage.Exclamation);
