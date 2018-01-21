@@ -74,6 +74,8 @@
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\PenaltySettings.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Serializers\GameSerializer.cs" />
+    <Compile Include="Serializers\PlayerSerializer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
