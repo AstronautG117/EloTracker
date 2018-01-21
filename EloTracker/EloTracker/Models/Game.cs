@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elo_Tracker.Models
+namespace EloTracker.Models
 {
     public enum GameWinState { White = 1, Black, Stalemate };
 

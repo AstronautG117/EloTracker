@@ -1,6 +1,6 @@
-using Elo_Tracker.Models;
-using Elo_Tracker.ObjectSerializers;
-using Elo_Tracker.Utilities;
+using EloTracker.Models;
+using EloTracker.ObjectSerializers;
+using EloTracker.Utilities;
 using GalaSoft.MvvmLight;
 using Microsoft.Win32;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 
-namespace Elo_Tracker.ViewModel
+namespace EloTracker.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

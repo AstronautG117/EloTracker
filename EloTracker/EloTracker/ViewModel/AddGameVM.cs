@@ -1,4 +1,4 @@
-﻿using Elo_Tracker.Models;
+﻿using EloTracker.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static Elo_Tracker.Models.Game;
+using static EloTracker.Models.Game;
 
-namespace Elo_Tracker.ViewModel
+namespace EloTracker.ViewModel
 {
     public class AddGameVM : ViewModelBase
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Elo_Tracker.Utilities
+namespace EloTracker.Utilities
 {
     public static class Serializer<T>
     {

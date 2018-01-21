@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elo_Tracker.Utilities
+namespace EloTracker.Utilities
 {
     public static class Utilities
     {

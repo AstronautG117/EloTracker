@@ -1,4 +1,4 @@
-﻿using Elo_Tracker.Models;
+﻿using EloTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Elo_Tracker.ObjectSerializers
+namespace EloTracker.ObjectSerializers
 {
     [Serializable]
     public class PlayerSerializer : ISerializable
