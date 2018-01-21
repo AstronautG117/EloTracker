@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:EloTracker.Views"
         xmlns:local="clr-namespace:EloTracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800"
+        Title="Elo Tracker" Height="500" Width="800"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
         <Style TargetType="Border">
