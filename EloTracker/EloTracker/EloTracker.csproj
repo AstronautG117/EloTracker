@@ -28,7 +28,7 @@
     <UpdateUrl>https://raw.githubusercontent.com/AstronautG117/EloTracker/master/EloTracker/EloTracker/publish/</UpdateUrl>
     <ProductName>Elo Tracker</ProductName>
     <PublisherName>Gregory Hanson</PublisherName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -66,7 +66,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>EloTracker_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
