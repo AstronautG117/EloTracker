@@ -121,7 +121,7 @@
     <Compile Include="Serializers\GameSerializer.cs" />
     <Compile Include="Serializers\PlayerSerializer.cs" />
     <Compile Include="Utilites\Serializer.cs" />
-    <Compile Include="Utilites\Utilities.cs" />
+    <Compile Include="Utilites\CSharpUtilities.cs" />
     <Compile Include="ViewModel\AddGameVM.cs" />
     <Compile Include="ViewModel\History.cs" />
     <Compile Include="ViewModel\AddPlayerVM.cs" />

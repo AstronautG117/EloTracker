@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace EloTracker.ViewModel
 {
@@ -77,25 +78,70 @@ namespace EloTracker.ViewModel
         {
             string playerSaveFile = Path.Combine(dataDir, PLAYERS_FILE_NAME);
             List<PlayerSerializer> pSerials = PlayerSerializer.SerializeList(Players);
-            Serializer<PlayerSerializer>.Save(pSerials, playerSaveFile);
+            if (!CSharpUtilities.IsFileLocked(playerSaveFile))
+            {
+                Serializer<PlayerSerializer>.Save(pSerials, playerSaveFile);
+            }
+            else
+            {
+                string tempFolder = Path.GetTempPath();
+                string tempPath = Path.Combine(tempFolder, PLAYERS_FILE_NAME);
+                Serializer<PlayerSerializer>.Save(pSerials, tempPath);
+                backup(tempFolder);
+                File.Delete(tempPath);
+            }
 
             string gameSaveFile = Path.Combine(dataDir, GAMES_FILE_NAME);
             List<GameSerializer> gSerials = GameSerializer.SerializeList(History.GameHistory);
-            Serializer<GameSerializer>.Save(gSerials, gameSaveFile);
+            if (!CSharpUtilities.IsFileLocked(gameSaveFile))
+            {
+                Serializer<GameSerializer>.Save(gSerials, gameSaveFile);
+            }
+            else
+            {
+                string tempFolder = Path.GetTempPath();
+                string tempPath = Path.Combine(tempFolder, GAMES_FILE_NAME);
+                Serializer<GameSerializer>.Save(gSerials, tempPath);
+                backup(tempFolder);
+                File.Delete(tempPath);
+            }
 
-            backup();
+            backup(dataDir);
         }
         private void loadExecute()
         {
             string playerSaveFile = Path.Combine(dataDir, "players.elo");
             if (!File.Exists(playerSaveFile)) return;
-            IEnumerable<PlayerSerializer> pSerials = Serializer<PlayerSerializer>.Load(playerSaveFile);
-            refreshPlayers(PlayerSerializer.UnserializeList(pSerials));
+            if (!CSharpUtilities.IsFileLocked(playerSaveFile))
+            {
+                IEnumerable<PlayerSerializer> pSerials = Serializer<PlayerSerializer>.Load(playerSaveFile);
+                refreshPlayers(PlayerSerializer.UnserializeList(pSerials));
+            }
+            else
+            {
+                MessageBox.Show(
+                    string.Format("{0} is open elsewhere. Please close the file and restart the application.", playerSaveFile),
+                    "File Open!",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+                return;
+            }
 
             string gameSaveFile = Path.Combine(dataDir, "games.elo");
             if (!File.Exists(gameSaveFile)) return;
-            IEnumerable<GameSerializer> gSerials = Serializer<GameSerializer>.Load(gameSaveFile);
-            History.Refresh(GameSerializer.UnserializeList(gSerials, Players));
+            if (!CSharpUtilities.IsFileLocked(gameSaveFile))
+            {
+                IEnumerable<GameSerializer> gSerials = Serializer<GameSerializer>.Load(gameSaveFile);
+                History.Refresh(GameSerializer.UnserializeList(gSerials, Players));
+            }
+            else
+            {
+                MessageBox.Show(
+                    string.Format("{0} is open elsewhere. Please close the file and restart the application.", gameSaveFile),
+                    "File Open!",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
         }
 
         private void refreshPlayers(IEnumerable<Player> players)
@@ -112,7 +158,7 @@ namespace EloTracker.ViewModel
             _players.Sort(Player.compareScores);
         }
 
-        private void backup()
+        private void backup(string sourceDirectory)
         {
             string backupDirectory = Path.Combine(dataDir, "Backups\\");
             if (!Directory.Exists(backupDirectory))
@@ -124,12 +170,20 @@ namespace EloTracker.ViewModel
             {
                 Directory.CreateDirectory(thisBackup);
             }
-            string playersFilePath = Path.Combine(dataDir, PLAYERS_FILE_NAME);
+
+            string playersFilePath = Path.Combine(sourceDirectory, PLAYERS_FILE_NAME);
             string playersBackupPath = Path.Combine(thisBackup, PLAYERS_FILE_NAME);
-            File.Copy(playersFilePath, playersBackupPath, true);
-            string gamesFilePath = Path.Combine(dataDir, GAMES_FILE_NAME);
+            if (File.Exists(playersFilePath) && !CSharpUtilities.IsFileLocked(playersFilePath))
+            {
+                File.Copy(playersFilePath, playersBackupPath, true);
+            }
+
+            string gamesFilePath = Path.Combine(sourceDirectory, GAMES_FILE_NAME);
             string gamesBackupPath = Path.Combine(thisBackup, GAMES_FILE_NAME);
-            File.Copy(gamesFilePath, gamesBackupPath, true);
+            if (File.Exists(gamesFilePath) && !CSharpUtilities.IsFileLocked(gamesFilePath))
+            {
+                File.Copy(gamesFilePath, gamesBackupPath, true);
+            }
         }
 
         private static string dataDir
