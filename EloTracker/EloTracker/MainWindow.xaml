@@ -22,7 +22,12 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TabControl>
+            <!--Leaderboard-->
             <TabItem Header="Leaderboard">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -53,6 +58,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <!--History-->
             <TabItem Header="History">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -99,5 +105,17 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <!--Status Bar-->
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Status"/>
+            <TextBlock Text="Version" Grid.Column="2"/>
+            <TextBlock Text="Bug Report" Grid.Column="3"/>
+        </Grid>
     </Grid>
 </Window>
