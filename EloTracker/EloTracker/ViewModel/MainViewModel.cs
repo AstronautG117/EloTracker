@@ -26,8 +26,10 @@ namespace EloTracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        #region Fields and Properties
         private const string PLAYERS_FILE_NAME = "players.elo";
         private const string GAMES_FILE_NAME = "games.elo";
+        private const string REPORT_URL = "https://github.com/AstronautG117/EloTracker/issues";
 
         private PenaltySettings settings;
 
@@ -42,10 +44,12 @@ namespace EloTracker.ViewModel
             }
         }
 
-        public AddPlayerVM AddPlayerVM { get; private set; }
-        public AddGameVM AddGameVM { get; private set; }
-        public HistoryVM HistoryVM { get; private set; }
-
+        public AddPlayerVM AddPlayerVM { get; }
+        public AddGameVM AddGameVM { get; }
+        public HistoryVM HistoryVM { get; }
+        public StatusBarVM StatusBarVM { get; }
+        #endregion
+        
         public MainViewModel()
         {
             settings = new PenaltySettings();
@@ -56,9 +60,11 @@ namespace EloTracker.ViewModel
             AddGameVM = new AddGameVM(Players);
             AddGameVM.GameAdded += addNewGame;
             HistoryVM = new HistoryVM(this.History, Players);
+            StatusBarVM = new StatusBarVM(REPORT_URL);
             loadExecute();
         }
 
+        #region Methods
         private void addNewPlayer(Player player)
         {
             _players.Add(player);
@@ -195,5 +201,6 @@ namespace EloTracker.ViewModel
                 return dir;
             }
         }
+        #endregion
     }
 }
