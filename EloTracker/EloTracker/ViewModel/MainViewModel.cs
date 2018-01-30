@@ -61,6 +61,7 @@ namespace EloTracker.ViewModel
             AddGameVM.GameAdded += addNewGame;
             HistoryVM = new HistoryVM(this.History, Players);
             StatusBarVM = new StatusBarVM(REPORT_URL);
+            StatusBarVM.Status = "Ready";
             loadExecute();
         }
 
@@ -82,6 +83,8 @@ namespace EloTracker.ViewModel
 
         private void saveExecute()
         {
+            StatusBarVM.Status = "Saving...";
+
             string playerSaveFile = Path.Combine(dataDir, PLAYERS_FILE_NAME);
             List<PlayerSerializer> pSerials = PlayerSerializer.SerializeList(Players);
             if (!CSharpUtilities.IsFileLocked(playerSaveFile))
@@ -113,9 +116,13 @@ namespace EloTracker.ViewModel
             }
 
             backup(dataDir);
+
+            StatusBarVM.Status = "Ready";
         }
         private void loadExecute()
         {
+            StatusBarVM.Status = "Loading...";
+
             string playerSaveFile = Path.Combine(dataDir, "players.elo");
             if (!File.Exists(playerSaveFile)) return;
             if (!CSharpUtilities.IsFileLocked(playerSaveFile))
@@ -148,6 +155,8 @@ namespace EloTracker.ViewModel
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
             }
+
+            StatusBarVM.Status = "Ready";
         }
 
         private void refreshPlayers(IEnumerable<Player> players)
