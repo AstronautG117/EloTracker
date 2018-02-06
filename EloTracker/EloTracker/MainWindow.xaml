@@ -36,14 +36,7 @@
                     </Grid.ColumnDefinitions>
                     <Border>
                         <!--Player List-->
-                        <DataGrid ItemsSource="{Binding Players}"
-                                  AutoGenerateColumns="False"
-                                  IsReadOnly="True">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
-                                <DataGridTextColumn Binding="{Binding Score}" Header="Score" Width="Auto"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <views:PlayerList Players="{Binding Players}"/>
                     </Border>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
@@ -75,17 +68,8 @@
                             </Grid.RowDefinitions>
 
                             <!--Player DataGrid-->
-                            <DataGrid ItemsSource="{Binding HistoryVM.Players}" 
-                                      AutoGenerateColumns="False"
-                                      SelectedItem="{Binding HistoryVM.SelectedPlayer}"
-                                      IsReadOnly="True">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Name}" 
-                                                        Header="Name" Width="Auto"/>
-                                    <DataGridTextColumn Binding="{Binding Score}" 
-                                                        Header="Score" Width="Auto"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <views:PlayerList Players="{Binding HistoryVM.Players}"
+                                              SelectedPlayer="{Binding HistoryVM.SelectedPlayer, Mode=TwoWay}"/>
 
                             <Button Grid.Row="1" Grid.Column="1" Content="Total History"
                                     Command="{Binding HistoryVM.TotalHistoryCommand}"/>
