@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -63,6 +64,11 @@ namespace EloTracker.ViewModel
             StatusBarVM = new StatusBarVM(REPORT_URL);
             StatusBarVM.Status = "Ready";
             loadExecute();
+
+            foreach(Player player in _players)
+            {
+                player.PropertyChanged += playerPropertyChanged;
+            }
         }
 
         #region Methods
@@ -71,6 +77,8 @@ namespace EloTracker.ViewModel
             _players.Add(player);
             _players.Sort(Player.compareScores);
             saveExecute();
+
+            player.PropertyChanged += playerPropertyChanged;
         }
 
         private void addNewGame(Game game)
@@ -208,6 +216,14 @@ namespace EloTracker.ViewModel
                 string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string dir = Path.Combine(appData, "ELO\\");
                 return dir;
+            }
+        }
+
+        private void playerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name")
+            {
+                saveExecute();
             }
         }
         #endregion
