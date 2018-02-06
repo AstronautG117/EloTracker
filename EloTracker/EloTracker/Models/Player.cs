@@ -11,14 +11,23 @@ namespace EloTracker.Models
 
     public class Player : INotifyPropertyChanged
     {
+        private string _name;
         private int _score;
 
         public readonly Guid Guid;
-
-
-
-        public string Name { get; }
-
+        
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (Name != value)
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Name"));
+                }
+            }
+        }
         public int Score
         {
             get { return _score; }
@@ -33,8 +42,7 @@ namespace EloTracker.Models
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private Player() { }
+        
         private Player(string name, int score = 1200, Guid? guid = null)
         {
             this.Name = name;
