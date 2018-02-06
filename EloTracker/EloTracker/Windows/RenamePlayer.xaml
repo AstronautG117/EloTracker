@@ -1,0 +1,42 @@
+﻿<Window x:Class="EloTracker.Windows.RenamePlayer"
+        x:Name="renamePlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EloTracker.Windows"
+        mc:Ignorable="d"
+        Title="Rename Player" Height="200" Width="300"
+        WindowStartupLocation="CenterOwner">
+    <Grid DataContext="{Binding ElementName=renamePlayer}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding OldPlayerName, StringFormat=Change name for \&quot;{0}\&quot;?}"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <TextBox Text="{Binding NewPlayerName}"
+                 Grid.Row="1" 
+                 Grid.ColumnSpan="2" 
+                 Height="20" 
+                 Width="100"/>
+        <Button Content="Rename" 
+                Grid.Row="2" 
+                Height="30"
+                Width="100"
+                Click="Rename_Click"/>
+        <Button Content="Cancel"
+                Grid.Row="2"
+                Grid.Column="1"
+                Height="30"
+                Width="100"
+                Click="Cancel_Click"/>
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
 ﻿using EloTracker.Models;
+using EloTracker.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,10 +45,6 @@ namespace EloTracker.Views
         public static readonly DependencyProperty SelectedPlayerProperty =
             DependencyProperty.Register("SelectedPlayer", typeof(Player), typeof(PlayerList));
 
-
-
-
-
         public PlayerList()
         {
             InitializeComponent();
@@ -55,7 +52,17 @@ namespace EloTracker.Views
 
         private void Rename_Click(object sender, RoutedEventArgs e)
         {
-            SelectedPlayer.Name = "Test";
+            if (SelectedPlayer != null)
+            {
+                RenamePlayer renameWindow = new RenamePlayer(SelectedPlayer.Name);
+                renameWindow.ShowDialog();
+
+                if (renameWindow.NewPlayerName != "")
+                {
+                    SelectedPlayer.Name = renameWindow.NewPlayerName;
+                }
+            }
+            
         }
     }
 }
