@@ -28,8 +28,8 @@
     <UpdateUrl>https://raw.githubusercontent.com/AstronautG117/EloTracker/master/EloTracker/EloTracker/publish/</UpdateUrl>
     <ProductName>Elo Tracker</ProductName>
     <PublisherName>Gregory Hanson</PublisherName>
-    <ApplicationRevision>6</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
